@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CNH Digital - Informativo</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css">
+  <style>
+    :root {
+      --text: #1f2937;
+      --muted: #4b5563;
+      --title: #0b3f82;
+      --border: #e5e7eb;
+      --bg-soft: #f8f9fb;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Open Sans", "Segoe UI", Tahoma, sans-serif; color: var(--text); background: #fff; line-height: 1.65; }
+    .container { width: min(1100px, 92%); margin: 0 auto; }
+
+    .header-utility {
+      background: #111827;
+      color: #e5e7eb;
+      border-bottom: 1px solid #1f2937;
+      font-size: 0.82rem;
+    }
+    .header-utility-row {
+      min-height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .utility-left { display: inline-flex; align-items: center; gap: 9px; }
+    .utility-dot { width: 7px; height: 7px; border-radius: 999px; background: #ef4444; display: inline-block; }
+    .utility-right { color: #cbd5e1; display: inline-flex; gap: 14px; }
+
+    .blog-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+    }
+    .blog-brand-row {
+      min-height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 12px 0;
+    }
+    .blog-brand-title { font-size: 1.45rem; color: #0f172a; font-weight: 800; letter-spacing: -0.01em; }
+    .blog-brand-sub { font-size: 0.88rem; color: #6b7280; }
+    .blog-actions { display: inline-flex; align-items: center; gap: 14px; color: #475569; font-size: 0.95rem; }
+
+    .blog-nav {
+      border-top: 1px solid #f3f4f6;
+      border-bottom: 1px solid var(--border);
+      background: #fff;
+    }
+    .blog-nav-row {
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .blog-cats { display: flex; gap: 8px; flex-wrap: wrap; }
+    .cat {
+      font-size: 0.92rem;
+      color: #374151;
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      background: transparent;
+    }
+    .cat.active {
+      color: #0b3f82;
+      border-color: #bfdbfe;
+      background: #eff6ff;
+      font-weight: 700;
+    }
+    .blog-search {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid #d1d5db;
+      border-radius: 999px;
+      padding: 7px 11px;
+      min-width: 220px;
+      color: #6b7280;
+      font-size: 0.88rem;
+    }
+    .blog-search input {
+      border: none;
+      outline: none;
+      width: 100%;
+      font-size: 0.88rem;
+      color: #374151;
+      background: transparent;
+    }
+
+    .content { width: min(760px, 92%); margin: 34px auto 0; padding-bottom: 46px; }
+    .tag { color: #3f3f46; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 10px; }
+    h1 { color: var(--title); font-size: clamp(2rem, 4vw, 2.8rem); line-height: 1.2; margin-bottom: 16px; font-weight: 700; }
+    .lead { font-size: 1.02rem; color: var(--muted); margin-bottom: 24px; }
+    .highlights { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }
+    .chip { border: 1px solid var(--border); border-radius: 999px; padding: 7px 14px; font-size: 0.93rem; color: #111827; background: #fff; font-weight: 600; }
+    section { border-top: 1px solid var(--border); padding: 28px 0; }
+    h2 { color: var(--title); font-size: 2rem; line-height: 1.2; margin-bottom: 10px; }
+    .subtitle { color: var(--muted); margin-bottom: 16px; }
+    .list { display: grid; gap: 12px; }
+    .item { background: var(--bg-soft); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+    h3 { color: #0f172a; font-size: 1.2rem; margin-bottom: 6px; }
+    p { color: var(--muted); }
+    ul { margin-left: 18px; color: var(--muted); }
+    li + li { margin-top: 8px; }
+    details { border: 1px solid var(--border); border-radius: 10px; background: #fff; padding: 14px; }
+    details + details { margin-top: 10px; }
+    summary { cursor: pointer; font-weight: 700; color: #0f172a; }
+    details p { margin-top: 10px; }
+
+    .blog-footer {
+      background: #f8f9fb;
+      border-top: 1px solid var(--border);
+      margin-top: 16px;
+      padding: 34px 0 24px;
+    }
+    .blog-footer h3 { color: var(--title); font-size: 1.2rem; margin-bottom: 10px; }
+    .blog-footer-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-bottom: 16px; }
+    .post-card { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
+    .post-card h4 { color: #0f172a; font-size: 0.98rem; margin-bottom: 4px; }
+    .post-card p { font-size: 0.9rem; color: var(--muted); }
+    .blog-footer-bottom { border-top: 1px solid var(--border); padding-top: 14px; color: #6b7280; font-size: 0.9rem; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+    .blog-links { display: flex; gap: 14px; font-size: 0.92rem; }
+
+    @media (max-width: 900px) {
+      .header-utility-row,
+      .blog-brand-row,
+      .blog-nav-row { flex-direction: column; align-items: flex-start; padding: 10px 0; }
+      .blog-search { min-width: 100%; }
+      .blog-footer-grid { grid-template-columns: 1fr; }
+      h2 { font-size: 1.75rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="header-utility">
+    <div class="container header-utility-row">
+      <div class="utility-left">
+        <span class="utility-dot"></span>
+        <span>Ao vivo: novidades sobre CNH Digital</span>
+      </div>
+      <div class="utility-right">
+        <span>Newsletter</span>
+        <span>Fale conosco</span>
+      </div>
+    </div>
+  </div>
+
+  <header class="blog-header">
+    <div class="container blog-brand-row">
+      <div>
+        <div class="blog-brand-title">Blog do Povo</div>
+        <div class="blog-brand-sub">CNH Digital, trânsito e serviços ao cidadão</div>
+      </div>
+      <div class="blog-actions" aria-hidden="true">
+        <i class="fa-regular fa-bookmark"></i>
+        <i class="fa-regular fa-bell"></i>
+        <i class="fa-solid fa-user"></i>
+      </div>
+    </div>
+    <div class="blog-nav">
+      <div class="container blog-nav-row">
+        <nav class="blog-cats" aria-hidden="true">
+          <span class="cat">Início</span>
+          <span class="cat active">Trânsito</span>
+          <span class="cat">CNH</span>
+          <span class="cat">Serviços</span>
+          <span class="cat">Dúvidas</span>
+        </nav>
+        <label class="blog-search" aria-label="Buscar">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" placeholder="Buscar no blog">
+        </label>
+      </div>
+    </div>
+  </header>
+
+  <main class="content">
+    <p class="tag">TRÂNSITO</p>
+    <h1>Sua Carteira de Motorista Digital</h1>
+    <p class="lead">Obtenha sua CNH Digital de forma rápida, segura e totalmente gratuita. Acesso imediato pelo aplicativo CNH do Brasil com validade legal em todo o território nacional.</p>
+
+    <div class="highlights">
+      <span class="chip">Até 20 dias</span>
+      <span class="chip">100% Gratuito</span>
+      <span class="chip">CNH Digital Card</span>
+    </div>
+
+    <section id="beneficios">
+      <h2>Benefícios da CNH Digital</h2>
+      <p class="subtitle">Conheça as vantagens de ter sua carteira de motorista digital.</p>
+      <div class="list">
+        <article class="item"><h3>Rápido</h3><p>Obtenha sua CNH em até 20 dias úteis, sem burocracias desnecessárias.</p></article>
+        <article class="item"><h3>Gratuito</h3><p>Totalmente sem custos. Sem taxas de autoescola ou emissão.</p></article>
+        <article class="item"><h3>Digital</h3><p>Acesse sua carteira pelo aplicativo CNH do Brasil em qualquer lugar.</p></article>
+        <article class="item"><h3>Seguro</h3><p>Válido legalmente em todo o Brasil com criptografia de segurança.</p></article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Como Funciona</h2>
+      <p class="subtitle">Siga os 4 passos simples para obter sua CNH Digital.</p>
+      <div class="list">
+        <article class="item"><h3>1. Cadastro inicial</h3><p>Preencha os dados pessoais e envie a documentação obrigatória.</p></article>
+        <article class="item"><h3>2. Análise de dados</h3><p>Sua solicitação é validada e conferida pelos órgãos responsáveis.</p></article>
+        <article class="item"><h3>3. Curso e prática</h3><p>Realize as etapas teóricas e práticas com instrutor credenciado.</p></article>
+        <article class="item"><h3>4. Emissão digital</h3><p>Após aprovação, acesse a CNH no aplicativo oficial CNH do Brasil.</p></article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Processo de Aplicação</h2>
+      <p class="subtitle">O que você precisa.</p>
+      <ul>
+        <li>CPF válido e ativo</li>
+        <li>Documento de identidade (RG, CNH ou Passaporte)</li>
+        <li>Comprovante de residência</li>
+        <li>Endereço de e-mail ativo</li>
+        <li>Número de telefone celular</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Informações importantes</h2>
+      <div class="list">
+        <article class="item"><h3>Validade</h3><p>A CNH Digital tem a mesma validade da CNH física: 10 anos para maiores de 50 anos e 5 anos para menores de 50 anos.</p></article>
+        <article class="item"><h3>Segurança</h3><p>Seus dados são protegidos com criptografia de ponta a ponta e autenticação de dois fatores.</p></article>
+        <article class="item"><h3>Aceitação</h3><p>Válida em todo o Brasil e reconhecida por órgãos de trânsito, polícia e instituições públicas.</p></article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Perguntas Frequentes</h2>
+      <details><summary>Quanto custa para obter a CNH Digital?</summary><p>A CNH Digital é totalmente gratuita. Não há custos com autoescola, taxas de emissão ou qualquer outra despesa.</p></details>
+      <details><summary>Quanto tempo leva para receber a CNH Digital?</summary><p>O processo leva em média 20 dias úteis desde a aprovação da sua solicitação até a emissão da carteira digital.</p></details>
+      <details><summary>A CNH Digital é válida em todo o Brasil?</summary><p>Sim, a CNH Digital é válida em todo o território nacional e é reconhecida por órgãos de trânsito e instituições públicas.</p></details>
+      <details><summary>Preciso fazer aulas práticas?</summary><p>Sim, são necessárias no mínimo 2 horas de aulas práticas com instrutor credenciado. O curso teórico é totalmente online e gratuito.</p></details>
+      <details><summary>Posso usar a CNH Digital para dirigir?</summary><p>Sim, a CNH Digital tem a mesma validade legal que a CNH física e pode ser usada para dirigir em todo o Brasil.</p></details>
+      <details><summary>Como acesso minha CNH Digital?</summary><p>Você acessa sua CNH Digital através do aplicativo oficial "CNH do Brasil", disponível para iOS e Android.</p></details>
+    </section>
+
+    <section>
+      <h2>Pronto para sua CNH Digital?</h2>
+      <p>Solicite agora e tenha sua carteira de motorista digital em até 20 dias.</p>
+    </section>
+  </main>
+
+  <footer class="blog-footer">
+    <div class="container">
+      <h3>Mais conteúdos do blog</h3>
+      <div class="blog-footer-grid">
+        <article class="post-card"><h4>CNH Digital: documentos obrigatórios</h4><p>Veja a lista completa para evitar atrasos na solicitação.</p></article>
+        <article class="post-card"><h4>Prazo de emissão: o que influencia</h4><p>Entenda os fatores que podem reduzir ou aumentar o tempo.</p></article>
+        <article class="post-card"><h4>Dúvidas frequentes sobre validade</h4><p>Saiba quando renovar e como manter sua habilitação regular.</p></article>
+      </div>
+      <div class="blog-footer-bottom">
+        <span>CNH Digital Blog</span>
+        <div class="blog-links"><span>Política de Privacidade</span><span>Termos de Uso</span><span>Contato</span></div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
