@@ -1,13 +1,4 @@
 [build]
-  publish = "cnhluizcdd-main"
-  command = ""
-
-[[redirects]]
-  from = "/*"
-  to = "/onhugbahtochnow.sbs/index.html"
-  status = 200
-
-[[headers]]
-  for = "/*"
-  [headers.values]
-    Cache-Control = "public, max-age=3600"
+  base = "cnhluizcdd-main"
+  publish = "dist"
+  command = "npm run build"
